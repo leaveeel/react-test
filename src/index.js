@@ -27,7 +27,7 @@ import FilterableProductTable from './js/p/container'
 const SiteRouter = () => (
 	<Router>
 	<Switch>
-	<Route exact path='/home' component={Linklist} />
+	<Route exact path='/' component={Linklist} />
 	<Route path='/secend' component={secend} />
 	<Route path='/top' component={top} />
 	<Route path='/props' component={props} />
@@ -43,7 +43,7 @@ const SiteRouter = () => (
 	<Route path='/inherit' component={inherit} />
 	<Route path='/Content2' component={Content2} />
 	<Route path='/FilterableProductTable' component={FilterableProductTable} />
-	<Redirect to={'/home'} />
+	<Redirect to='/' />
 	</Switch>
 	</Router>
 )

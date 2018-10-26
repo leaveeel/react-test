@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 
 const Linklist = () => (
-	<div>
+	<div className="linklist">
 	<p><Link to='/secend'>secend</Link></p>
 	<a href="/top">top</a>
 	<a href="/props">props</a>
