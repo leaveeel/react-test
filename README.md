@@ -8,6 +8,13 @@ src/js/p/ 里的是<a href="https://react.docschina.org/docs/thinking-in-react.h
 
 添加路由设置目录，修改代码结构以便路由调用。
 
-> \<Route\>的exact属性为严格匹配。true时子目录不显示 / 目录下的内容
+> // <Route>的exact属性为严格匹配。true时子目录不显示 / 目录下的内容e.g.
+> // 不使用exact属性，在/home页面同时展示/,/home内容
+> <Route path='/' component={} />
+> <Route path='/home' component={home} />
+>
+> // 使用exact属性，在/home页面只展示/home内容
+> <Route exact path='/' component={} />
+> <Route path='/home' component={home} /> 
 
 \<Redirect\>标签用作404页面跳转到默认页面
