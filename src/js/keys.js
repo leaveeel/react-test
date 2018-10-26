@@ -1,16 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-function Blog(props) {
+function Blog() {
 	const sidebar = (
 		<ul>
-		{props.posts.map((post) => <li key={post.id}>
+		{posts.map((post) => <li key={post.id}>
 			{post.title}
 			</li>
 			)}
 		</ul>
 	)
-	const content = props.posts.map((post) => <div key={post.id}>
+	const content = posts.map((post) => <div key={post.id}>
 		<h3>{post.title}</h3>
 		<p>{post.content}</p>
 		</div>)
@@ -33,7 +32,4 @@ const posts = [{
 	content: "2222"
 }]
 
-ReactDOM.render(
-	<Blog posts={posts} />,
-	document.getElementById('keys')
-)
+export default Blog

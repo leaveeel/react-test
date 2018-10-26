@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 function WarningBanner(props) {
 	if (!props.warn) {
@@ -38,7 +37,4 @@ class Page extends React.Component {
 	}
 }
 
-ReactDOM.render(
-	<Page />,
-	document.getElementById('Warning')
-)
+export default Page

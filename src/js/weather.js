@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 function BoilingVerdict(props) {
 	if (props.celsius >= 100) {
@@ -88,7 +87,4 @@ function tryConvert(temperature, convert) {
 	return rounded.toString()
 }
 
-ReactDOM.render(
-	<Calculator />,
-	document.getElementById('weather')
-)
+export default Calculator

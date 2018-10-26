@@ -1,13 +1,32 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-var a = 1;
-
-function tick() {
-	a = a + 1;
-	const el = (
-		<div>last {a} secend</div>
-	);
-	ReactDOM.render(el, document.getElementById('secend'));
+var times = 1;
+class Secend extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			time: 1
+		}
+	}
+	componentDidMount() {
+		this.timerID = setInterval(
+			() => this.tick(), 1000
+		);
+	}
+	componentWillUnmount() {
+		clearInterval(this.timerID);
+	}
+	tick() {
+		times = times + 1
+		this.setState({
+			time: times
+		})
+	}
+	render() {
+		return (
+			<div>{this.state.time} secends</div>
+		)
+	}
 }
-setInterval(tick, 1000)
+
+export default Secend

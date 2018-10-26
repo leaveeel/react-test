@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class Greeting extends React.Component {
     constructor(props) {
@@ -37,7 +36,4 @@ class Greeting extends React.Component {
     }
 }
 
-ReactDOM.render(
-    <Greeting />,
-    document.getElementById('Greeting')
-)
+export default Greeting

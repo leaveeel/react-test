@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class NameForm extends React.Component {
 	constructor(props) {
@@ -130,7 +129,14 @@ class Reservation extends React.Component {
 	}
 }
 
-ReactDOM.render(
-	(<div><NameForm /><EssayForm /><FlavorForm/><hr /><Reservation /></div>),
-	document.getElementById('form')
+const Form = () => (
+	<div>
+	<NameForm />
+	<EssayForm />
+	<FlavorForm/>
+	<hr />
+	<Reservation />
+	</div>
 )
+
+export default Form

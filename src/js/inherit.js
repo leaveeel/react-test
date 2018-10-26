@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 /*function FancyBorder(props) {
 	return (
@@ -126,7 +125,4 @@ class SignUpDialog extends React.Component {
 	}
 }
 
-ReactDOM.render(
-	<SignUpDialog />,
-	document.getElementById('inherit')
-)
+export default SignUpDialog

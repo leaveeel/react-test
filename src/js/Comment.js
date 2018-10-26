@@ -1,19 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 function formatDate(date) {
     return date.toLocaleDateString();
 }
 
-function Comment(props) {
+function Comment() {
     return (
         <div className="Comment">
-        <UserInfo attr={props.author} />
+        <UserInfo attr={comment.author} />
         <div className="Comment-text">
-        {props.text}
+        {comment.text}
         </div>
         <div className="Comment-date">
-        {formatDate(props.date)}
+        {formatDate(comment.date)}
         </div>
         </div>
     );
@@ -44,10 +43,5 @@ const comment = {
         avatarUrl: 'http://placekitten.com/g/64/64'
     }
 };
-ReactDOM.render(
-    <Comment
-    date={comment.date}
-    text={comment.text}
-    author={comment.author} />,
-    document.getElementById('comment')
-);
+
+export default Comment
