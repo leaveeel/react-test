@@ -3,14 +3,18 @@ import React from 'react'
 class Backpage extends React.Component {
 	constructor(props) {
 		super(props)
-		const prevURL = window.location.search.match(new RegExp("(^|&?)prevURL=([^]*)", "i"))[2]
 		this.state = {
-			backpage: prevURL
+			show: props.show
 		}
 	}
 
 	render() {
-		return (<a className={this.props.className} href={this.state.backpage}>{this.props.text}</a>)
+		if (this.state.show) {
+			return (
+				<a className='back' href='javascript: history.back(0)'>返回</a>
+			)
+		}
+		return ''
 	}
 }
 

@@ -10,20 +10,21 @@ class Home extends React.Component {
 				title: 'index',
 				link: 'home',
 				font: 'weiruan',
-				text: 'hhaa',
-				canBack: true
-			},
-			val: 'totop'
+				text: 'hhaa'
+			}
 		}
 	}
 
-	componentWillMount() {
-		window.localStorage.clear()
+	componentDidMount() {
+		const url = '/top?title=' + this.state.title + '&link=' + this.state.link + '&localURL=' + this.state.localURL
+		this.setState({
+			url: url
+		})
 	}
 
 	render() {
 		return (
-			<Jumppage aim={this.state.topage} takeprops={this.state.takeprops} target={this.state.target} val={this.state.val} />
+			<Jumppage aim={this.state.topage} takeprops={this.state.takeprops} target={this.state.target} />
 		)
 	}
 }

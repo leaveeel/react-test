@@ -16,7 +16,7 @@ const SiteRouter = () => (
 	<Switch>
 	<Route exact path='/home' component={Home} />
 	<Route path='/top' component={AppTop} />
-	<Redirect to='/Home' />
+	<Redirect to='/home' />
 	</Switch>
 	</Router>
 )

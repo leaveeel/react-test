@@ -1,29 +1,30 @@
 import React from 'react'
 import Backpage from './backpage'
 
-const AppTop = (props) => (
-	<header>
-	<div>
-	<h1>{props.word}</h1>
-	<Back show={props.word==='登录'?false:true} />
-	</div>
-	</header>
-)
+class AppTop extends React.Component {
+	componentWillMount() {
+		const storage = window.localStorage
+		this.setState(JSON.parse(storage.getItem('toTop')))
+		storage.setItem('ddd', 111)
+	}
 
-class Back extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			show: props.show
-		}
+	componentWillUnmount() {
+		window.localStorage.clear()
+
 	}
 
 	render() {
-		if (this.state.show) {
-			return (<Backpage className='back' text='返回' />)
-		}
-		return ''
+		console.log(this.state)
+		return (
+			<header>
+			<div>
+			<h1>{this.state.text}</h1>
+			<Backpage show={this.state.canBack?true:false} />
+			</div>
+			</header>
+		)
 	}
 }
+
 
 export default AppTop
