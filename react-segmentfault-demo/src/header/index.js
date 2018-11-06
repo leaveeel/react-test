@@ -1,7 +1,8 @@
 import React from 'react'
 import {
-    Out,
     Head,
+    Main,
+    MainLeft,
     Logo,
     Nav,
     FirstMenu,
@@ -15,98 +16,167 @@ import {
     ItemTitle,
     ItemInfo,
     ItemState,
-    ItemMore
+    ItemMore,
+    Search,
+    MainRight,
+    UnLogin,
+    IsLogin
 } from './style'
 
-export default class Header extends React.Component {
+class Submenu extends React.Component {
+    componentWillMount() {
+        let recommend = require('./json.json').recommend
+        this.setState({
+            recommend: recommend
+        })
+    }
+
+    render() {
+        if (this.state.recommend && this.state.recommend.length !== 0) {
+            return (
+                <SubMenu>
+                    <SubUl>
+                    {this.props.data.map((data,index) => 
+                        <li key={index}>
+                            <SubA href={data.link}>{data.label}</SubA>
+                        </li>
+                    )}
+                    </SubUl>
+                    <Recommend>
+                    {this.state.recommend.map((data,index) => 
+                        <RecommendItem key={index}>
+                            <a href={data.link}>
+                                <ItemTitle>{data.title}</ItemTitle>
+                            </a>
+                            <ItemInfo>
+                                <span>{data.city}</span> · <span>{data.date}</span> · <ItemState>{data.state}</ItemState>
+                            </ItemInfo>
+                        </RecommendItem>
+                    )}
+                        <ItemMore>
+                            <a href='/events'>查看更多活动</a>
+                        </ItemMore>
+                    </Recommend>
+                </SubMenu>
+            )
+        }
+        return (
+            <SubMenu>
+                <SubUl>
+                {this.props.data.map((data,index) => 
+                    <li key={index}>
+                        <SubA href={data.link}>{data.label}</SubA>
+                    </li>
+                )}
+                </SubUl>
+            </SubMenu>
+        )
+    }
+}
+
+class Navigate extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            index: 0,
-            nav: [{
-                label: '首页',
-                link: '/',
-            }, {
-                label: '问答',
-                link: '/',
-            }, {
-                label: '专栏',
-                link: '/',
-            }, {
-                label: '讲堂',
-                link: '/',
-            }, {
-                label: '发现',
-                link: '/',
-                subMenu: [{
-                    label: '圈子',
-                    link: ''
-                }, {
-                    label: '活动',
-                    link: ''
-                }, {
-                    label: '标签',
-                    link: ''
-                }, {
-                    label: '找工作',
-                    link: ''
-                }, {
-                    label: '排行榜',
-                    link: ''
-                }, {
-                    label: '徽章',
-                    link: ''
-                }, {
-                    label: '笔记',
-                    link: ''
-                }, {
-                    label: '开发手册',
-                    link: ''
-                }, {
-                    label: '广告投放',
-                    link: ''
-                }]
-            }],
-            recommend: [{
-                title: '领域驱动设计中国峰会 2018',
-                link: '1',
-                city: '北京',
-                date: '2018-11-29 周四',
-                state: '报名中'
-            }, {
-                title: 'GIAC2018全球互联网架构大会上海站',
-                link: '2',
-                city: '上海',
-                date: '2018-11-23 周五',
-                state: '报名中'
-            }]
+            index: 0
         }
+    }
+
+    componentWillMount() {
+        let nav = require('./json.json').nav
+        let login = require('./json.json').isLogin
+        this.setState({
+            nav: nav,
+            login: login
+        })
     }
 
     render() {
         return (
-            <Out>
-			<Head>
-			<Logo href='/'></Logo>
-			<Nav>
-			{
-				this.state.nav.map((data,index) => <FirstMenu key={index}>
-					{
-						data.subMenu ? <FMa>{data.label}<DownArrow aria-hidden='true' /></FMa> : <FMa href={data.link} choose={index==this.state.index?true:false}>{data.label}</FMa>
-					}
-					{
-						data.subMenu ? <SubMenu><SubUl>{data.subMenu.map((data,index) => <li key={index}><SubA href={data.link}>{data.label}</SubA></li>)}</SubUl><Recommend>
-						{
-							this.state.recommend.map((data,index)=><RecommendItem key={index}><a href={data.link}><ItemTitle>{data.title}</ItemTitle></a><ItemInfo><span>{data.city}</span> · <span>{data.date}</span> · <ItemState>{data.state}</ItemState></ItemInfo></RecommendItem>)
-						}
-						<ItemMore><a href=''>查看更多活动</a></ItemMore>
-						</Recommend></SubMenu> : ''
-					}
-					</FirstMenu>)
-			}
-			</Nav>
-			</Head>
-			</Out>
+            <Nav>
+            {this.state.nav.map((data,index) => 
+                <FirstMenu key={index}>
+                {data.subMenu ? 
+                    <FMa>{data.label}<DownArrow /></FMa> : 
+                    <FMa href={data.link} choose={index === this.state.index ? true : false} tips={this.state.login && data.tips ? true : false}>{data.label}</FMa>
+                }
+                {data.subMenu ? 
+                    <Submenu data={data.subMenu} /> : 
+                    ''
+                }
+                </FirstMenu>
+            )}
+            </Nav>
         )
     }
+}
+
+class HeadSearch extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            focus: false
+        }
+    }
+
+    onFocus = () => {
+        this.setState({
+            focus: true
+        })
+    }
+
+    onBlur = () => {
+        this.setState({
+            focus: false
+        })
+    }
+
+    render() {
+        return (
+            <Search action='https://segmentfault.com/search' focus={this.state.focus}>
+                <button>搜索</button>
+                <input name='q' type='text' placeholder='搜索问题或关键字' onFocus={this.onFocus} onBlur={this.onBlur} />
+            </Search>
+        )
+    }
+}
+
+class LoginState extends React.Component {
+    componentWillMount() {
+        let isLogin = require('./json.json').isLogin
+        this.setState({
+            isLogin: isLogin
+        })
+    }
+
+    render() {
+        if (this.state.isLogin) {
+            return ''
+        }
+        return (
+            <UnLogin>
+                <li>
+                    <button className='login'>立即登录</button>
+                    <button className='register'>免费注册</button>
+                </li>
+            </UnLogin>
+        )
+    }
+}
+
+export default function Header() {
+    return (
+        <Head>
+            <Main>
+                <MainLeft>
+                    <Logo href='/'></Logo>
+                    <Navigate />
+                    <HeadSearch />
+                </MainLeft>
+                <MainRight>
+                    <LoginState />
+                </MainRight>
+            </Main>
+        </Head>
+    )
 }

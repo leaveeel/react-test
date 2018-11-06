@@ -1,0 +1,60 @@
+{
+    "isLogin": false,
+    "nav": [{
+        "label": "首页",
+        "link": "/"
+    }, {
+        "label": "问答",
+        "link": "/questions"
+    }, {
+        "label": "专栏",
+        "link": "/blogs"
+    }, {
+        "label": "讲堂",
+        "link": "/lives",
+        "tips": true
+    }, {
+        "label": "发现",
+        "subMenu": [{
+            "label": "圈子",
+            "link": "/groups"
+        }, {
+            "label": "活动",
+            "link": "events"
+        }, {
+            "label": "标签",
+            "link": "tags"
+        }, {
+            "label": "找工作",
+            "link": "jobs"
+        }, {
+            "label": "排行榜",
+            "link": "users"
+        }, {
+            "label": "徽章",
+            "link": "badges"
+        }, {
+            "label": "笔记",
+            "link": "notes"
+        }, {
+            "label": "开发手册",
+            "link": ""
+        }, {
+            "label": "广告投放",
+            "link": ""
+        }]
+    }],
+    "recommend": [{
+        "title": "领域驱动设计中国峰会 2018",
+        "link": "1",
+        "city": "北京",
+        "date": "2018-11-29 周四",
+        "state": "报名中"
+    }, {
+        "title": "GIAC2018全球互联网架构大会上海站",
+        "link": "2",
+        "city": "上海",
+        "date": "2018-11-23 周五",
+        "state": "报名中"
+    }]
+}
