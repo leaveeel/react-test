@@ -1,5 +1,5 @@
 {
-    "isLogin": false,
+    "isLogin": true,
     "nav": [{
         "label": "首页",
         "link": "/"

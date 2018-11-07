@@ -1,4 +1,5 @@
 import React from 'react'
+import FontAwesome from 'react-fontawesome'
 import {
     Head,
     Main,
@@ -20,7 +21,9 @@ import {
     Search,
     MainRight,
     UnLogin,
-    IsLogin
+    IsLogin,
+    Make,
+    Opts
 } from './style'
 
 class Submenu extends React.Component {
@@ -134,9 +137,31 @@ class HeadSearch extends React.Component {
     render() {
         return (
             <Search action='https://segmentfault.com/search' focus={this.state.focus}>
-                <button>搜索</button>
+                <button><FontAwesome name='search' /></button>
                 <input name='q' type='text' placeholder='搜索问题或关键字' onFocus={this.onFocus} onBlur={this.onBlur} />
             </Search>
+        )
+    }
+}
+
+class MenuBox extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
+    render() {
+        return (
+            <Opts>
+                <ul className='head'>
+                    <li><FontAwesome name='bullhorn' /></li>
+                    <li><FontAwesome name='commenting-o' /></li>
+                    <li><FontAwesome name='thumbs-o-up' /></li>
+                    <li><FontAwesome name='user-plus' /></li>
+                </ul>
+                <ul className='body'>
+                    
+                </ul>
+            </Opts>
         )
     }
 }
@@ -145,13 +170,50 @@ class LoginState extends React.Component {
     componentWillMount() {
         let isLogin = require('./json.json').isLogin
         this.setState({
-            isLogin: isLogin
+            isLogin: isLogin,
+            buttonClick: false
+        })
+    }
+
+    buttonFocus = () => {
+        this.setState({
+            buttonClick: this.state.buttonClick ? false : true
+        })
+    }
+
+    buttonBlur = () => {
+        this.setState({
+            buttonClick: false
         })
     }
 
     render() {
         if (this.state.isLogin) {
-            return ''
+            return (
+                <IsLogin>
+                    <li>
+                        <button onClick={this.buttonFocus} onBlur={this.buttonBlur}>创建<i /></button>
+                        <Make show={this.state.buttonClick}>
+                            <li><a href='/ask'>提问题</a></li>
+                            <li><a href='/submit'>发头条</a></li>
+                            <li><a href='/write'>写文章</a></li>
+                            <li><a href='/record'>记笔记</a></li>
+                            <li><a href='/draft'>草稿箱</a></li>
+                        </Make>
+                    </li>
+                    <li>
+                        <FontAwesome name='bell-o' />
+                        <MenuBox name='nfc' />
+                    </li>
+                    <li>
+                        <FontAwesome name='envelope-o' />
+                    </li>
+                    <li>
+                        <a href='/u'> </a>
+                        <div></div>
+                    </li>
+                </IsLogin>
+            )
         }
         return (
             <UnLogin>
