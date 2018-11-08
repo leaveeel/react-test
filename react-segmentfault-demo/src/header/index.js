@@ -23,7 +23,12 @@ import {
     UnLogin,
     IsLogin,
     Make,
-    Opts
+    Opts,
+    OptsHli,
+    UserMenu,
+    Gold,
+    Silver,
+    Copper
 } from './style'
 
 class Submenu extends React.Component {
@@ -147,21 +152,107 @@ class HeadSearch extends React.Component {
 class MenuBox extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            active: 0,
+            list: [{
+                name: 'bullhorn',
+            }, {
+                name: 'commenting-o',
+            }, {
+                name: 'thumbs-o-up',
+            }, {
+                name: 'user-plus',
+            }]
+        }
+    }
+
+    getmsg = () => {
+        let json = require('./json.json')
+        var nfc
+        if (this.state.active === 0) {
+            nfc = json.general
+        } else if (this.state.active === 1) {
+            nfc = json.comment
+        } else if (this.state.active === 2) {
+            nfc = json.ranked
+        } else if (this.state.active === 3) {
+            nfc = json.followed
+        }
+        let msg = json.msg
+        this.setState({
+            nfc: nfc,
+            msg: msg
+        })
+    }
+
+    componentWillMount() {
+        this.getmsg()
+    }
+
+    active = (e) => {
+        let index = +e.currentTarget.getAttribute('data-index')
+        this.setState({
+            active: index,
+        }, this.getmsg)
+    }
+
+    render() {
+        if (this.props.name === 'nfc') {
+            return (
+                <Opts show={this.props.show}>
+                    <ul className='head'>
+                    {this.state.list.map((data,index) => 
+                        <OptsHli key={index} data-index={index} active={this.state.active === index ? true : false} onClick={this.active}><FontAwesome name={data.name} /></OptsHli>
+                    )}
+                    </ul>
+                    <ul className='body'>
+                    {this.state.nfc.map((data,index) =>
+                        <li key={index}>{data.title}</li>
+                    )}
+                    </ul>
+                    <a className='foot' href='/user/notifications'>查看全部 »</a>
+                </Opts>
+            )
+        }
+        return (
+            <Opts show={this.props.show}>
+                    <ul className='head'>
+                        <li>最近的私信</li>
+                    </ul>
+                    <ul className='body'>
+                    {this.state.msg.map((data,index) =>
+                        <li key={index}>{data.title}</li>
+                    )}
+                    </ul>
+                    <a className='foot' href='/user/notifications'>查看全部 »</a>
+                </Opts>
+        )
+    }
+}
+
+class User extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            prestige: 0,
+            gold: 0,
+            silver: 0,
+            copper: 0
+        }
     }
 
     render() {
         return (
-            <Opts>
-                <ul className='head'>
-                    <li><FontAwesome name='bullhorn' /></li>
-                    <li><FontAwesome name='commenting-o' /></li>
-                    <li><FontAwesome name='thumbs-o-up' /></li>
-                    <li><FontAwesome name='user-plus' /></li>
-                </ul>
-                <ul className='body'>
-                    
-                </ul>
-            </Opts>
+            <UserMenu>
+                <div className="head">
+                    <label>{this.state.prestige} 声望</label>
+                    <ul>
+                        <li><Gold></Gold>{this.state.gold}</li>
+                        <li><Silver></Silver>{this.state.silver}</li>
+                        <li><Copper></Copper>{this.state.copper}</li>
+                    </ul>
+                </div>
+            </UserMenu>
         )
     }
 }
@@ -171,7 +262,15 @@ class LoginState extends React.Component {
         let isLogin = require('./json.json').isLogin
         this.setState({
             isLogin: isLogin,
-            buttonClick: false
+            buttonClick: false,
+            menubox: false
+        })
+        document.addEventListener('click', this.boxHide)
+    }
+
+    boxHide = () => {
+        this.setState({
+            menubox: false
         })
     }
 
@@ -185,6 +284,24 @@ class LoginState extends React.Component {
         this.setState({
             buttonClick: false
         })
+    }
+
+    menuboxShow = (e) => {
+        let box = e.currentTarget.getAttribute('box')
+        if (box === this.state.box) {
+            this.setState({
+                menubox: this.state.menubox ? false : true
+            })
+        } else {
+            this.setState({
+                menubox: true,
+                box: box
+            })
+        }
+    }
+
+    hideBlock = (e) => {
+        e.nativeEvent.stopImmediatePropagation()
     }
 
     render() {
@@ -201,16 +318,21 @@ class LoginState extends React.Component {
                             <li><a href='/draft'>草稿箱</a></li>
                         </Make>
                     </li>
-                    <li>
-                        <FontAwesome name='bell-o' />
-                        <MenuBox name='nfc' />
+                    <li onClick={this.hideBlock}>
+                        <FontAwesome name='bell-o' box='nfc' onClick={this.menuboxShow} />
+                        {this.state.box === 'nfc' ?
+                        <MenuBox name='nfc' show={this.state.menubox} /> : 
+                        ''}
                     </li>
-                    <li>
-                        <FontAwesome name='envelope-o' />
+                    <li onClick={this.hideBlock}>
+                        <FontAwesome name='envelope-o' box='msg' onClick={this.menuboxShow} />
+                        {this.state.box === 'msg' ?
+                        <MenuBox name='msg' show={this.state.menubox} /> : 
+                        ''}
                     </li>
                     <li>
                         <a href='/u'> </a>
-                        <div></div>
+                        <User />
                     </li>
                 </IsLogin>
             )

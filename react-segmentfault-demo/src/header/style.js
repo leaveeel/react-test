@@ -4,6 +4,7 @@ import styled, {
 import logo from '../img/logo-b.svg'
 import sf from '../img/sf.gg-tip@2x.png'
 import user from '../img/user-64.png'
+import money from '../img/badge.svg'
 
 const downarr = css `
     content: '';
@@ -442,6 +443,7 @@ export const Make = styled.ul `
 
 export const Opts = styled.div `
     position: absolute
+    display: ${props => props.show ? 'block' : 'none'}
     padding: 0;
     right: 0;
     left: inherit;
@@ -458,26 +460,102 @@ export const Opts = styled.div `
     box-shadow: 0px 6px 12px 0px rgba(0,0,0,0.18);
     border-radius: 3px;
     background-clip: padding-box;
+    background: #f5f5f5;
     .head {
         width: 320px;
-        li {
-            display: inline-block
-            width: 80px;
+        > li {
+            display: inline-block;
             height: 40px;
             line-height: 40px;
-            text-align: center;
-            color: #666
-            border-bottom: 1px solid #ddd
-            cursor: pointer
-            font-size: 20px;
-            &:hover {
-                color:#009A61
-                border-bottom: 2px solid #009A61
-            }
+            padding: 0 15px;
         }
     }
     .body {
+        background: #fff;
         width: 320px;
         height: 270px;
     }
+    .foot {
+        display: block;
+        color: #666;
+        padding: 10px;
+        font-size: 13px;
+        text-align: right;
+        border-top: 1px solid #ddd
+    }
+`
+
+export const OptsHli = styled.li `
+    width: 80px;
+    text-align: center;
+    padding: 0;
+    color: ${props => props.active ? '#009A61' : '#666'}
+    border-bottom: ${props => props.active ? '2px solid #009A61' : '1px solid #ddd'}
+    cursor: pointer
+    font-size: 20px;
+    &:hover {
+        border-bottom: 2px solid #009A61
+    }
+`
+
+export const UserMenu = styled.div `
+    position: absolute;
+    margin-top: 2px;
+    padding: 5px 0;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+    min-width: 240px;
+    font-size: 14px;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+    background: #fff;
+    .head {
+        overflow: hidden
+        label {
+            float: left;
+            display: block;
+            font-weight: bold;
+            color: #212121;
+            margin-left: 20px;
+            margin-right: 10px;
+        }
+        ul {
+            float: left
+            overflow: hidden
+            li {
+                float: left;
+                color: #9E9E9E;
+                height: 16px;
+                margin-right: 4px;
+                font-size: 14px;
+                line-height: 16px;
+                vertical-align: bottom
+                i {
+                    display: inline-block
+                    margin-right: 4px;
+                    width: 14px;
+                    height: 14px;
+                    background-image: url(${money});
+                    margin-top:1px
+                }
+            }
+        }
+    }
+`
+
+export const Gold = styled.i `
+    background-position: 0;
+`
+
+export const Silver = styled.i `
+    background-position: 28px, 0;
+`
+
+export const Copper = styled.i `
+    background-position: 14px, 0;
 `
