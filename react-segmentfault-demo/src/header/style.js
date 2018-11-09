@@ -499,6 +499,7 @@ export const OptsHli = styled.li `
 `
 
 export const UserMenu = styled.div `
+    display: ${props => props.show ? 'block' : 'none'}
     position: absolute;
     margin-top: 2px;
     padding: 5px 0;
@@ -514,6 +515,11 @@ export const UserMenu = styled.div `
     -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
     box-shadow: 0 6px 12px rgba(0,0,0,0.175);
     background: #fff;
+    hr {
+        margin: 9px 0
+        border: 0;
+        border-top: 1px solid #eee
+    }
     .head {
         overflow: hidden
         label {
@@ -523,26 +529,62 @@ export const UserMenu = styled.div `
             color: #212121;
             margin-left: 20px;
             margin-right: 10px;
+            line-height: 34px;
         }
         ul {
             float: left
-            overflow: hidden
+            display: block
+            line-height: 34px
             li {
                 float: left;
                 color: #9E9E9E;
-                height: 16px;
                 margin-right: 4px;
                 font-size: 14px;
-                line-height: 16px;
-                vertical-align: bottom
                 i {
-                    display: inline-block
-                    margin-right: 4px;
+                    float:left
+                    display: block
+                    margin-right: 5px;
                     width: 14px;
-                    height: 14px;
+                    height: 34px;
                     background-image: url(${money});
-                    margin-top:1px
+                    background-repeat: no-repeat;
                 }
+                p {
+                    float:left;
+                    display: block;
+                }
+            }
+        }
+    }
+    .body {
+        overflow: hidden;
+        li {
+            width: 50%;
+            float: right;
+            text-align: left;
+            a {
+                display: block;
+                padding: 3px 20px;
+                clear: both;
+                font-size: 14px;
+                line-height: 1.42857143;
+                color: #212121;
+                white-space: nowrap
+            }
+            &:hover {
+                background: #f5f5f5;
+            }
+        }
+    }
+    .foot {
+        text-align: center;
+        color: #999
+        padding: 3px 0
+        a {
+            color: #999
+            font-size: 13px;
+            &:hover {
+                text-decoration: underline;
             }
         }
     }
@@ -553,9 +595,28 @@ export const Gold = styled.i `
 `
 
 export const Silver = styled.i `
-    background-position: 28px, 0;
+    background-position: -14px;
 `
 
 export const Copper = styled.i `
-    background-position: 14px, 0;
+    background-position: -28px;
+`
+
+export const Shadow = styled.div `
+    display: ${props => props.show ? 'block' : 'none'}
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    .main {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        background: #fff;
+        border-radius: 6px;
+        -webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
 `

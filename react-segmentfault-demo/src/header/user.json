@@ -1,0 +1,37 @@
+{
+    "user": "asdasd",
+    "score": {
+        "prestige": 0,
+        "gold": 0,
+        "silver": 0,
+        "copper": 0
+    },
+    "menu": [{
+        "name": "我的主页",
+        "url": ""
+    }, {
+        "name": "我的笔记",
+        "url": "/notes"
+    }, {
+        "name": "我的档案",
+        "url": "/about"
+    }, {
+        "name": "我的收藏",
+        "url": "/bookmarks"
+    }, {
+        "name": "我的资产",
+        "url": "/finance"
+    }, {
+        "name": "受邀回答",
+        "url": "/invited"
+    }, {
+        "name": "个人设置",
+        "url": "/settings"
+    }, {
+        "name": "付费问答",
+        "url": "/experts"
+    }, {
+        "name": "退出",
+        "url": "/api/logout"
+    }]
+}

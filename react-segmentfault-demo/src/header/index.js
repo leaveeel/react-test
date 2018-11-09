@@ -28,7 +28,8 @@ import {
     UserMenu,
     Gold,
     Silver,
-    Copper
+    Copper,
+    Shadow
 } from './style'
 
 class Submenu extends React.Component {
@@ -99,6 +100,13 @@ class Navigate extends React.Component {
         })
     }
 
+    navClick(index) {
+        this.setState({
+            index: index
+        })
+        console.log(this.state.index)
+    }
+
     render() {
         return (
             <Nav>
@@ -106,7 +114,7 @@ class Navigate extends React.Component {
                 <FirstMenu key={index}>
                 {data.subMenu ? 
                     <FMa>{data.label}<DownArrow /></FMa> : 
-                    <FMa href={data.link} choose={index === this.state.index ? true : false} tips={this.state.login && data.tips ? true : false}>{data.label}</FMa>
+                    <FMa choose={index === this.state.index ? true : false} tips={this.state.login && data.tips ? true : false} onClick={this.navClick(index)}>{data.label}</FMa>
                 }
                 {data.subMenu ? 
                     <Submenu data={data.subMenu} /> : 
@@ -234,25 +242,45 @@ class User extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            prestige: 0,
-            gold: 0,
-            silver: 0,
-            copper: 0
+            json: require('./user.json')
         }
     }
 
     render() {
+        let data = this.state.json
         return (
-            <UserMenu>
-                <div className="head">
-                    <label>{this.state.prestige} 声望</label>
+            <UserMenu show={this.props.show}>
+                <div className='head'>
+                    <label>{data.score.prestige} 声望</label>
                     <ul>
-                        <li><Gold></Gold>{this.state.gold}</li>
-                        <li><Silver></Silver>{this.state.silver}</li>
-                        <li><Copper></Copper>{this.state.copper}</li>
+                        <li><Gold></Gold><p>{data.score.gold}</p></li>
+                        <li><Silver></Silver><p>{data.score.silver}</p></li>
+                        <li><Copper></Copper><p>{data.score.copper}</p></li>
                     </ul>
                 </div>
+                <hr />
+                <ul className='body'>
+                {data.menu.map((menu, index)=>
+                    <li key={index}><a href={'/u'+ menu.url}>{menu.name}</a></li>
+                )}
+                </ul>
+                <hr />
+                <div className='foot'>
+                    <a href='/u'>用户申诉</a> · 
+                    <a href='/advance'>建议反馈</a> · 
+                    <a href='/u/invitation'>邀请朋友</a>
+                    </div>
             </UserMenu>
+        )
+    }
+}
+
+class Window extends React.Component {
+    render() {
+        return (
+            <Shadow show={this.props.show}>
+                <div className='main'></div>
+            </Shadow>
         )
     }
 }
@@ -263,7 +291,8 @@ class LoginState extends React.Component {
         this.setState({
             isLogin: isLogin,
             buttonClick: false,
-            menubox: false
+            menubox: false,
+            userShow: false
         })
         document.addEventListener('click', this.boxHide)
     }
@@ -304,6 +333,36 @@ class LoginState extends React.Component {
         e.nativeEvent.stopImmediatePropagation()
     }
 
+    userOver = () => {
+        this.setState({
+            userShow: true
+        })
+    }
+
+    userLeave = () => {
+        this.setState({
+            userShow: false
+        })
+    }
+
+    loginClick = () => {
+        this.setState({
+            windowShow: true,
+            windowName: 'login'
+        }, function() {
+            console.log(this.state.windowShow)
+        })
+    }
+
+    registerClick = () => {
+        this.setState({
+            windowShow: true,
+            windowName: 'register'
+        }, function() {
+            console.log(this.state.windowShow)
+        })
+    }
+
     render() {
         if (this.state.isLogin) {
             return (
@@ -330,9 +389,9 @@ class LoginState extends React.Component {
                         <MenuBox name='msg' show={this.state.menubox} /> : 
                         ''}
                     </li>
-                    <li>
+                    <li onMouseOver={this.userOver} onMouseLeave={this.userLeave}>
                         <a href='/u'> </a>
-                        <User />
+                        <User show={this.state.userShow} />
                     </li>
                 </IsLogin>
             )
@@ -340,9 +399,10 @@ class LoginState extends React.Component {
         return (
             <UnLogin>
                 <li>
-                    <button className='login'>立即登录</button>
-                    <button className='register'>免费注册</button>
+                    <button className='login' onClick={this.loginClick}>立即登录</button>
+                    <button className='register' onClick={this.registerClick}>免费注册</button>
                 </li>
+                <Window show={this.state.windowShow} name={this.state.windowName} />
             </UnLogin>
         )
     }
@@ -353,7 +413,7 @@ export default function Header() {
         <Head>
             <Main>
                 <MainLeft>
-                    <Logo href='/'></Logo>
+                    <Logo href='/' />
                     <Navigate />
                     <HeadSearch />
                 </MainLeft>
