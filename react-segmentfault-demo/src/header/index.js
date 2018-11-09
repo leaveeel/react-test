@@ -100,13 +100,6 @@ class Navigate extends React.Component {
         })
     }
 
-    navClick(index) {
-        this.setState({
-            index: index
-        })
-        console.log(this.state.index)
-    }
-
     render() {
         return (
             <Nav>
@@ -114,7 +107,7 @@ class Navigate extends React.Component {
                 <FirstMenu key={index}>
                 {data.subMenu ? 
                     <FMa>{data.label}<DownArrow /></FMa> : 
-                    <FMa choose={index === this.state.index ? true : false} tips={this.state.login && data.tips ? true : false} onClick={this.navClick(index)}>{data.label}</FMa>
+                    <FMa href={data.link} choose={index === this.state.index ? true : false} tips={this.state.login && data.tips ? true : false}>{data.label}</FMa>
                 }
                 {data.subMenu ? 
                     <Submenu data={data.subMenu} /> : 
