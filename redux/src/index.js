@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppleBasket from './applebasket';
+import Cart from './cart'
 
 ReactDOM.render(
-    <AppleBasket />,
+    <Cart />,
     document.getElementById('root')
 )
