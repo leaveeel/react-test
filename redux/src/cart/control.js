@@ -1,8 +1,7 @@
 import React from 'react';
 import store from '../redux/store';
-import { add, update, del } from '../redux/actions/cart-actions';
+import { add, update, del, updateChecked } from '../redux/actions/cart-actions';
 
-//store.dispatch(update('bread 700g', 5, 110));
 //store.dispatch(del('milk 500ml'))
 class Button extends React.Component {
     constructor(props){
@@ -21,11 +20,15 @@ class Button extends React.Component {
     //store改变时更新
     unsubscribe = () => {
         store.subscribe(() =>
+            store.getState().cart.update !== '' ?
             this.setState({
                 delArr: store.getState().cart.delete,
                 product: store.getState().cart.cart[store.getState().cart.update].product,
                 quantity: store.getState().cart.cart[store.getState().cart.update].quantity,
                 unitCost: store.getState().cart.cart[store.getState().cart.update].unitCost
+            }) : 
+            this.setState({
+                delArr: store.getState().cart.delete
             })
         )
     }
@@ -49,11 +52,17 @@ class Button extends React.Component {
     }
 
     update = () => {
-        console.log(store.getState().cart)
+        if(store.getState().cart.update !== '') {
+            store.dispatch(update(this.state.product, this.state.quantity, this.state.unitCost));
+            store.dispatch(updateChecked(''));
+            this.initial();
+        }
     }
 
     del = () => {
-
+        if(store.getState().cart.delete.length > 0) {
+            store.dispatch(del(store.getState().cart.delete))
+        }
     }
 
     productChange = (event) => {

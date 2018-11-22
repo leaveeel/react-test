@@ -33,6 +33,7 @@ class List extends React.Component {
     //选中时向数组添加index，取消移除
     delChecked = (event) => {
         let arr = this.state.delArr;
+        //字符串转数字
         let index = +event.target.getAttribute('data-index')
         if(event.target.checked) {
             arr.push(index)
@@ -40,8 +41,11 @@ class List extends React.Component {
                 delArr: arr
             })
         }else {
+            //获取点击的checkbox在数组中的位置并删除
             let arrIndex = arr.indexOf(index)
-            arr.splice(arrIndex, 1)
+            this.setState({
+                arr: arr.splice(arrIndex, 1)
+            })
         }
         store.dispatch(delChecked(arr))
     }

@@ -27,12 +27,10 @@ export function updateChecked(index) {
     }
 }
 
-export function del(product) {
+export function del(del) {
     return {
         type: 'DELETE',
-        payload: {
-            product
-        }
+        payload: del
     }
 }
 
