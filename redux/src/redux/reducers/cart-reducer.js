@@ -1,45 +1,11 @@
+//store储存的数据
 const initialState = {
     update: '',
-    delete: '',
-    cart: [
-        {
-            product: 'bread 700g',
-            quantity: 2,
-            unitCost: 90
-        },
-        {
-            product: 'milk 100ml',
-            quantity: 3,
-            unitCost: 47
-        },
-        {
-            product: 'milk 540ml',
-            quantity: 2,
-            unitCost: 47
-        },
-        {
-            product: 'milk 500ml',
-            quantity: 1,
-            unitCost: 47
-        },
-        {
-            product: 'milk 320ml',
-            quantity: 12,
-            unitCost: 47
-        },
-        {
-            product: 'milk 250ml',
-            quantity: 8,
-            unitCost: 47
-        },
-        {
-            product: 'milk 500ml',
-            quantity: 1,
-            unitCost: 47
-        }
-    ]
+    delete: [],
+    cart: require('../../json/cart.json').cart
 }
 
+//通过action.type判断调用方法
 export default function(state = initialState, action) {
     switch(action.type) {
         case 'ADD': {
@@ -54,6 +20,7 @@ export default function(state = initialState, action) {
         case 'UPDATE': {
             return {
                 ...state,
+                //对下标进行比较、更新
                 cart: state.cart.map((item, index)=> index === state.update ? action.payload : item)
             }
         }

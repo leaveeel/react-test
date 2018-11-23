@@ -1,8 +1,7 @@
 import React from 'react';
 import store from '../redux/store';
-import { add, update, del, updateChecked } from '../redux/actions/cart-actions';
+import { add, update, del, updateChecked, delChecked } from '../redux/actions/cart-actions';
 
-//store.dispatch(del('milk 500ml'))
 class Button extends React.Component {
     constructor(props){
         super(props)
@@ -14,47 +13,41 @@ class Button extends React.Component {
     }
 
     componentWillMount() {
-        this.unsubscribe()
-    }
-
-    //store改变时更新
-    unsubscribe = () => {
+        //store数据被改变时更新状态
         store.subscribe(() =>
+            //获取store中的状态判断update是否选中
             store.getState().cart.update !== '' ?
             this.setState({
-                delArr: store.getState().cart.delete,
                 product: store.getState().cart.cart[store.getState().cart.update].product,
                 quantity: store.getState().cart.cart[store.getState().cart.update].quantity,
                 unitCost: store.getState().cart.cart[store.getState().cart.update].unitCost
             }) : 
             this.setState({
-                delArr: store.getState().cart.delete
+                product: '',
+                quantity: '',
+                unitCost: ''
             })
         )
     }
 
-    //初始化input
+    //清空选中
     initial = () => {
-        this.setState({
-            product: '',
-            quantity: '',
-            unitCost: ''
-        })
+        //执行更新store方法，
+        store.dispatch(delChecked([]));
+        store.dispatch(updateChecked(''));
     }
     
     add = () => {
         if(this.state.product !== '' && this.state.quantity !== '' && this.state.unitCost !== '') {
+            //执行add方法，将相关参数更新到store
             store.dispatch(add(this.state.product, this.state.quantity, this.state.unitCost))
             this.initial()
-        }else {
-            //alert('not full')
         }
     }
 
     update = () => {
         if(store.getState().cart.update !== '') {
             store.dispatch(update(this.state.product, this.state.quantity, this.state.unitCost));
-            store.dispatch(updateChecked(''));
             this.initial();
         }
     }
@@ -62,6 +55,7 @@ class Button extends React.Component {
     del = () => {
         if(store.getState().cart.delete.length > 0) {
             store.dispatch(del(store.getState().cart.delete))
+            this.initial();
         }
     }
 
@@ -84,6 +78,7 @@ class Button extends React.Component {
     }
 
     render(){
+        console.log(store.getState().cart)
         return (
             <div>
             product: <input value={this.state.product} onChange={this.productChange} /><br />

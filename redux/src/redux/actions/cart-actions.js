@@ -1,3 +1,4 @@
+//定义方法
 export function add(product, quantity, unitCost) {
     return {
         type: 'ADD',

@@ -7,17 +7,11 @@ class List extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            delArr: [],
             cart: store.getState().cart.cart
         }
     }
 
     componentWillMount(){
-        this.unsubscribe()
-    }
-
-    //更新store
-    unsubscribe = () => {
         store.subscribe(() =>
             this.setState({
                 cart: store.getState().cart.cart
@@ -26,26 +20,22 @@ class List extends React.Component {
     }
 
     updateChecked = (event) => {
+        //获取属性并转换为number
         let index = +event.target.getAttribute('data-index')
         store.dispatch(updateChecked(index))
     }
 
+    //复选框功能
     //选中时向数组添加index，取消移除
     delChecked = (event) => {
-        let arr = this.state.delArr;
-        //字符串转数字
+        let arr = store.getState().cart.delete;
         let index = +event.target.getAttribute('data-index')
         if(event.target.checked) {
             arr.push(index)
-            this.setState({
-                delArr: arr
-            })
         }else {
             //获取点击的checkbox在数组中的位置并删除
             let arrIndex = arr.indexOf(index)
-            this.setState({
-                arr: arr.splice(arrIndex, 1)
-            })
+            arr.splice(arrIndex, 1)
         }
         store.dispatch(delChecked(arr))
     }
@@ -56,8 +46,8 @@ class List extends React.Component {
             <ul>
             {this.state.cart.map((data, index) => 
                 <li key = {index}>
-                    <input type='checkbox' data-index={index} onClick={this.delChecked} />
-                    <input name='update' type='radio' data-index={index} onClick={this.updateChecked} />
+                    <input type='checkbox' readOnly='readOnly' checked={store.getState().cart.delete.indexOf(index) !== -1 ? true : false} data-index={index} onClick={this.delChecked} />
+                    <input name='update' readOnly='readOnly' checked={index === store.getState().cart.update ? true : false} type='radio' data-index={index} onClick={this.updateChecked} />
                     product: {data.product} quantity: {data.quantity} unitCost: {data.unitCost}
                 </li>
             )}
