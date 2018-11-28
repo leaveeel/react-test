@@ -30,3 +30,6 @@
 
 * 2018年11月27日
     * 开始往项目添加redux，先写了`login`状态和`nav`焦点，后面有需要再一起写。
+
+* 2018年11月28日
+    * 因为redux刷新页面丢失store，感觉有些地方用`cookie`或者`Local Storage`更合适，因为不需要永久缓存就看了一下`cookie`的用法，写了一个用于`cookie`增删改查的common模块。
