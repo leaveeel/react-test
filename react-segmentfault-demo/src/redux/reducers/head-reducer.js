@@ -1,20 +1,13 @@
-const state={
-    login:false,
-    nav:0
+const navState = {
+    login: false
 }
 
-export default function(state = state, action) {
+export default function(state = navState, action) {
     switch(action.type) {
         case 'LOGIN': {
             return {
                 ...state,
                 login: action.login
-            }
-        }
-        case 'NAV': {
-            return {
-                ...state,
-                nav: action.index
             }
         }
         default:
