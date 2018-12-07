@@ -2,23 +2,23 @@ import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import User from './user';
 import MenuBox from './menuBox';
-import LoginWindow from './loginWindow';
 import {
     UnLogin,
     IsLogin,
     Make
 } from './style';
+import { getCookie, setCookie } from '../common/cookie';
 
 class LoginState extends React.Component {
     componentWillMount() {
-        let isLogin = require('./json.json').isLogin
         this.setState({
-            isLogin: isLogin,
+            isLogin: getCookie('login') === 'true' ? true : false,
             buttonClick: false,
             menubox: false,
             userShow: false
         })
         document.addEventListener('click', this.boxHide)
+        console.log(getCookie('login') )
     }
 
     boxHide = () => {
@@ -30,12 +30,6 @@ class LoginState extends React.Component {
     buttonFocus = () => {
         this.setState({
             buttonClick: this.state.buttonClick ? false : true
-        })
-    }
-
-    buttonBlur = () => {
-        this.setState({
-            buttonClick: false
         })
     }
 
@@ -70,20 +64,9 @@ class LoginState extends React.Component {
     }
 
     loginClick = () => {
+        setCookie('login', true)
         this.setState({
-            windowShow: true,
-            windowName: 'login'
-        }, function() {
-            console.log(this.state.windowShow)
-        })
-    }
-
-    registerClick = () => {
-        this.setState({
-            windowShow: true,
-            windowName: 'register'
-        }, function() {
-            console.log(this.state.windowShow)
+            isLogin: getCookie('login') === 'true' ? true : false,
         })
     }
 
@@ -92,7 +75,7 @@ class LoginState extends React.Component {
             return (
                 <IsLogin>
                     <li>
-                        <button onClick={this.buttonFocus} onBlur={this.buttonBlur}>创建<i /></button>
+                        <button onClick={this.buttonFocus}>创建<i /></button>
                         <Make show={this.state.buttonClick}>
                             <li><a href='/ask'>提问题</a></li>
                             <li><a href='/submit'>发头条</a></li>
@@ -124,9 +107,8 @@ class LoginState extends React.Component {
             <UnLogin>
                 <li>
                     <button className='login' onClick={this.loginClick}>立即登录</button>
-                    <button className='register' onClick={this.registerClick}>免费注册</button>
+                    <button className='register'>免费注册</button>
                 </li>
-                <LoginWindow show={this.state.windowShow} name={this.state.windowName} />
             </UnLogin>
         )
     }

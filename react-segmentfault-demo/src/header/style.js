@@ -602,21 +602,3 @@ export const Copper = styled.i `
     background-position: -28px;
 `
 
-export const Shadow = styled.div `
-    display: ${props => props.show ? 'block' : 'none'}
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: rgba(0,0,0,0.5);
-    .main {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        background: #fff;
-        border-radius: 6px;
-        -webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    }
-`

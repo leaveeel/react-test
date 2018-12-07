@@ -35,7 +35,7 @@ class Navigate extends React.Component {
                     <FMa href={data.link} choose={index === this.state.index ? true : false} tips={this.state.login && data.tips ? true : false} onClick={this.navClick} data-index={index}>{data.label}</FMa>
                 }
                 {data.subMenu ? 
-                    <Submenu data={data.subMenu} /> : 
+                    <Submenu data={data.subMenu} nav={index} /> : 
                     ''
                 }
                 </FirstMenu>

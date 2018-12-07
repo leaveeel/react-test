@@ -10,6 +10,7 @@ import {
     ItemState,
     ItemMore
 } from './style'
+import { setCookie } from '../common/cookie';
 
 class Submenu extends React.Component {
     componentWillMount() {
@@ -19,6 +20,10 @@ class Submenu extends React.Component {
         })
     }
 
+    subClick = () => {
+        setCookie('nav', this.props.nav)
+    }
+
     render() {
         if (this.state.recommend && this.state.recommend.length !== 0) {
             return (
@@ -26,7 +31,7 @@ class Submenu extends React.Component {
                     <SubUl>
                     {this.props.data.map((data,index) => 
                         <li key={index}>
-                            <SubA href={data.link}>{data.label}</SubA>
+                            <SubA href={data.link} onClick={this.subClick}>{data.label}</SubA>
                         </li>
                     )}
                     </SubUl>
